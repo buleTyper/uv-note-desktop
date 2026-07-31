@@ -1,0 +1,130 @@
+常见的编辑快捷键
+
+
+
+
+
+
+
+
+
+
+
+
+基础撤销与保存
+`ctrl + s`
+`ctrl + z`
+`ctrl + y / ctrl + shift + z`
+
+
+
+
+
+
+
+剪切复制与粘贴
+ctrl + c
+ctrl + x
+ctrl + v
+ctrl + shift + v
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+`ctrl + a`
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 基础撤销与保存
+
+`ctrl + s`
+`ctrl + z`
+`ctrl + y / ctrl + shift + z`
+
+---
+
+## 剪切复制与粘贴
+
+`ctrl + c`
+`ctrl + x`
+`ctrl + v`
+`ctrl + shift + v`
+
+---
+
+## 全选与寻找替换
+
+`ctrl + a`
+`ctrl + f`
+`ctrl + h`
+
+---
+
+## 光标快速跳跃
+
+`ctrl + ← / ctrl + →`
+`home / end`
+`ctrl + home / ctrl + end`
+
+---
+
+## 快速选中文本
+
+`shift + ← / → / ↑ / ↓`
+`shift + home / end`
+`ctrl + shift + ← / →`
+
+---
+
+## 快速行操作
+
+`alt + ↑ / ↓`
+`shift + alt + ↑ / ↓`
+`ctrl + shift + k`
+`ctrl + /`
+
+---
+
+## 多光标与批量修改
+
+`ctrl + d`
+`alt + 鼠标左键点击`
+
+
+
+
+
+
+
+
+
+``
+``
+``
+``
+``
+``
+``
+``
+``
+``

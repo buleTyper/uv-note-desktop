@@ -1,0 +1,35 @@
+说起来我应该用个好点的名字
+
+uv是我之前随手加的，用到现在也懒得换了，干脆就说是universe-note
+
+给人看的时候就叫：`Universe Note`或者简写`UV Note`
+
+作为项目名称就不要这样，据说有的地方不能加空格，大小写不区分。uvnote还是uv-note
+
+`uv-note`吧，以防很多人第一眼不知道uvnote是什么玩意
+
+
+
+
+
+
+
+1. 仓库名（Repository Name）本质是 URL 和路径
+GitHub 的仓库名会直接拼进网址和命令行指令里：
+
+如果仓库名带空格（如 Universe Note）：
+
+URL 会强制变成 [https://github.com/buleTyper/Universe%20Note](https://github.com/buleTyper/Universe%20Note)（那个 %20 看起来非常怪异且不好敲）。
+
+如果用命令行执行：
+
+git clone [https://github.com/buleTyper/Universe%20Note.git](https://github.com/buleTyper/Universe%20Note.git) 或者在 Linux/Terminal 里输入路径，带空格的目录必须加转义符 cd Universe\ Note，打字极度痛苦。
+
+2. 为什么工业界偏爱小写（kebab-case 或 flatcase）？
+跨操作系统兼容性（避坑）：
+
+Windows 系统对文件名是大小写不敏感的（UVNote 和 uvnote 在 Windows 看来是同一个文件夹）。
+
+Linux 和 macOS 是大小写敏感的。
+
+如果仓库名带大写（如 UniverseNote），在跨平台协作或 CI/CD 自动化构建（比如运行在 Linux 上的 GitHub Actions）时，偶尔会因为大小写拼错引发极其隐蔽的路径报错。全小写可以 100% 杜绝这种隐患。
