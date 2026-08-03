@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { ChevronRight, FileText, X } from 'lucide-react'
 import MainLayout from './components/layout/MainLayout'
+import MarkdownEditor from './components/editor/MarkdownEditor'
 
 // ============================
 // 类型
@@ -417,12 +418,9 @@ export default function App() {
 
       {/* ====== 编辑器 ====== */}
       {activeTab ? (
-        <textarea
-          className="flex-1 px-6 py-4 font-mono text-[14px] leading-relaxed text-app-text bg-transparent border-none outline-none resize-none editor-area"
+        <MarkdownEditor
           value={activeTab.editContent}
-          onChange={e => handleEditChange(e.target.value)}
-          spellCheck={false}
-          placeholder="开始编辑..."
+          onChange={handleEditChange}
         />
       ) : (
         <div className="flex items-center justify-center flex-1 text-app-text-dim text-[14px]">

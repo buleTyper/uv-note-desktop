@@ -169,11 +169,97 @@ body {
 }
 
 /* ============================
-   Editor Area
+   Markdown Editor（单 textarea + 镜像实测换行 + 装订线）
    ============================ */
-.editor-area {
+.editor-scroll {
+  flex: 1;
+  overflow: auto;
+  cursor: text;
+  position: relative;
+}
+.editor-body {
+  display: flex;
+  min-height: 100%;
+}
+/* ---- 隐藏镜像 div：与 textarea 完全相同的排版规则，用于实测每行视觉高度 ---- */
+.editor-mirror {
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+  top: 16px;            /* 与 textarea padding-top 对齐 */
+  left: 0;
+  font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
   tab-size: 2;
 }
-.editor-area::placeholder {
+.editor-mirror > div {
+  margin: 0;
+  padding: 0;
+}
+/* ---- 装订线 ---- */
+.gutter {
+  flex-shrink: 0;
+  user-select: none;
+  background: #181818;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.gutter-row {
+  display: flex;
+  align-items: center;
+  height: 1.6em;        /* 与 textarea / mirror 的 line-height 精确一致 */
+  padding-right: 4px;
+}
+.gutter-ln {
+  flex: 1;
+  text-align: right;
+  padding-right: 6px;
+  font-size: 13px;
+  color: #666666;
+}
+/* 折叠箭头 — 无框纯图标 */
+.fold-toggle {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  opacity: 0;
+  cursor: pointer;
+  color: #cccccc;
+}
+.editor-scroll--gutter-hover .fold-toggle {
+  opacity: 1;
+}
+.fold-toggle--visible {
+  opacity: 1;
+}
+/* ---- 编辑区 ---- */
+.editor-textarea {
+  flex: 1;
+  min-width: 0;
+  display: block;
+  padding: 16px 8px;
+  font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #cccccc;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  tab-size: 2;
+}
+.editor-textarea::placeholder {
   color: #666666;
 }
