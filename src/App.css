@@ -43,12 +43,13 @@ body {
 .tree-row {
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 4px 8px;
+  gap: 2px;
+  padding: 3px 8px;
   margin: 0 4px;
   cursor: pointer;
   font-size: 13px;
   border-radius: 4px;
+  position: relative;
 }
 .tree-row:hover {
   background: #2a2d2e;
@@ -57,23 +58,119 @@ body {
   background: #37373d;
 }
 .tree-arrow {
-  width: 16px;
-  text-align: center;
-  font-size: 10px;
-  color: #666666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
+  color: #858585;
 }
 .tree-icon {
-  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
+  color: #858585;
 }
 .tree-name {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/* 层级缩进竖线（VS Code indent guides） */
+.tree-guide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #404040;
+  pointer-events: none;
+}
 
-/* Editor area */
+/* ============================
+   Tab Bar Styles (VS Code 风格多标签页)
+   ============================ */
+.tab-bar {
+  display: flex;
+  align-items: flex-end;
+  height: 36px;
+  background: #252526;
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-shrink: 0;
+  scrollbar-width: none;
+}
+.tab-bar::-webkit-scrollbar {
+  display: none;
+}
+.tab-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 34px;
+  padding: 0 10px;
+  font-size: 13px;
+  color: #858585;
+  background: #2d2d2d;
+  border-right: 1px solid #252526;
+  cursor: pointer;
+  flex-shrink: 0;
+  user-select: none;
+  position: relative;
+  min-width: 0;
+  max-width: 200px;
+}
+.tab-item--active {
+  color: #cccccc;
+  background: #1e1e1e;
+  border-bottom: 1px solid #1e1e1e;
+}
+.tab-item:hover {
+  color: #cccccc;
+}
+.tab-item:first-child {
+  border-left: none;
+}
+.tab-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+.tab-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  font-size: 11px;
+  color: #858585;
+}
+.tab-action:hover {
+  background: #3c3c3c;
+  color: #ffffff;
+}
+/* Dirty dot → 悬浮时显示 × */
+.tab-dirty-dot {
+  display: inline;
+}
+.tab-item:hover .tab-dirty-dot {
+  display: none;
+}
+.tab-close-x {
+  display: none;
+}
+.tab-item:hover .tab-close-x {
+  display: inline;
+}
+
+/* ============================
+   Editor Area
+   ============================ */
 .editor-area {
   tab-size: 2;
 }
