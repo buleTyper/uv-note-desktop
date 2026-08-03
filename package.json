@@ -23,6 +23,7 @@
     "electron-builder": "^25.1.8",
     "typescript": "^5.5.4",
     "vite": "^5.4.0",
+    "vitest": "^4.1.10",
     "wait-on": "^7.2.0"
   },
   "build": {
@@ -38,8 +39,18 @@
     ],
     "win": {
       "target": [
-        { "target": "nsis", "arch": ["x64"] },
-        { "target": "portable", "arch": ["x64"] }
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
       ],
       "artifactName": "Universe Note Setup.${ext}",
       "sign": false,
