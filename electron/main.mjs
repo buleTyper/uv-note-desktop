@@ -12,6 +12,7 @@ const isDev = !app.isPackaged
 function createWindow() {
   const win = new BrowserWindow({
     width: 1200, height: 800, minWidth: 800, minHeight: 600,
+    frame: false,                              // 无边框 ← 自定义标题栏
     title: 'UV Note',
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
@@ -19,16 +20,39 @@ function createWindow() {
       nodeIntegration: false,
     },
   })
+
   if (isDev) {
     win.loadURL('http://localhost:5173')
     win.webContents.openDevTools()
   } else {
     win.loadFile(path.join(__dirname, '../dist/index.html'))
   }
+
+  // 窗口最大化/还原事件 → 通知渲染进程更新图标
+  win.on('maximize', () => win.webContents.send('window-maximized', true))
+  win.on('unmaximize', () => win.webContents.send('window-maximized', false))
 }
 
 // ============================
-// IPC
+// 窗口控制 IPC
+// ============================
+ipcMain.handle('window-minimize', (event) => {
+  BrowserWindow.fromWebContents(event.sender)?.minimize()
+})
+ipcMain.handle('window-maximize', (event) => {
+  const win = BrowserWindow.fromWebContents(event.sender)
+  if (!win) return
+  win.isMaximized() ? win.unmaximize() : win.maximize()
+})
+ipcMain.handle('window-close', (event) => {
+  BrowserWindow.fromWebContents(event.sender)?.close()
+})
+ipcMain.handle('window-is-maximized', (event) => {
+  return BrowserWindow.fromWebContents(event.sender)?.isMaximized() ?? false
+})
+
+// ============================
+// 文件操作 IPC
 // ============================
 ipcMain.handle('select-folder', async () => {
   const r = await dialog.showOpenDialog({ title: '选择文件夹', properties: ['openDirectory'] })
