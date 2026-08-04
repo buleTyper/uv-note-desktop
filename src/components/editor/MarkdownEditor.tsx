@@ -438,26 +438,37 @@ export default function MarkdownEditor({
         {/* ====== 渲染层（语法高亮 + 图片预览） ====== */}
         <div className="render-layer">
           {lines.map((line, i) => {
+            const vCount = visualLineCounts[i] ?? 1
             const imgRefs = imageLines.get(i)
+            const highlighted = highlightLine(line) || '&nbsp;'
+
             return (
               <div key={i}>
-                {/* 文本行 */}
-                <div
-                  className="render-line"
-                  dangerouslySetInnerHTML={{
-                    __html: highlightLine(line) || '&nbsp;',
-                  }}
-                />
-                {/* 图片预览（在该行下方，不占行号） */}
+                {/* 文本行：一个逻辑行有多少视觉行就渲染多少个 div，overflow 裁剪 + translateY 偏移 */}
+                {Array.from({ length: vCount }, (_, v) => (
+                  <div
+                    key={v}
+                    className="render-line"
+                    style={{ overflow: 'hidden' }}
+                  >
+                    <span
+                      style={{
+                        display: 'block',
+                        position: 'relative',
+                        top: `${-v * 1.6}em`,
+                      }}
+                      dangerouslySetInnerHTML={{ __html: highlighted }}
+                    />
+                  </div>
+                ))}
+
+                {/* 图片预览 */}
                 {imgRefs &&
                   imgRefs.map(ref => {
                     const imgKey = `${i}-${ref.url}`
                     if (collapsedImages.has(imgKey)) return null
                     return (
-                      <div
-                        key={imgKey}
-                        className="image-preview-row"
-                      >
+                      <div key={imgKey} className="image-preview-row">
                         <img
                           src={resolveImageSrc(ref.url)}
                           alt={ref.alt || 'image'}
