@@ -77,6 +77,28 @@ ipcMain.handle('save-file', async (_e, filePath, content) => {
   catch (err) { return { success: false, error: err.message } }
 })
 
+// 剪贴板图片保存
+ipcMain.handle('save-clipboard-image', async (_e, workspacePath, base64Data) => {
+  try {
+    const assetsDir = path.join(workspacePath, '.uvnote', 'assets')
+    if (!fs.existsSync(assetsDir)) fs.mkdirSync(assetsDir, { recursive: true })
+
+    // 从 base64 提取扩展名
+    const m = base64Data.match(/^data:image\/(png|jpeg|gif|webp);base64,/)
+    const ext = m ? m[1] : 'png'
+    const raw = base64Data.replace(/^data:image\/\w+;base64,/, '')
+
+    const stamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19)
+    const filename = `image-${stamp}.${ext}`
+    const filePath = path.join(assetsDir, filename)
+
+    fs.writeFileSync(filePath, Buffer.from(raw, 'base64'))
+    return { success: true, path: `.uvnote/assets/${filename}` }
+  } catch (err) {
+    return { success: false, error: err.message }
+  }
+})
+
 // 应用配置
 function configPath() { return path.join(app.getPath('userData'), 'config.json') }
 ipcMain.handle('get-app-config', () => {

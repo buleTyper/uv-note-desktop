@@ -169,24 +169,23 @@ body {
 }
 
 /* ============================
-   Markdown Editor（单 textarea + 镜像实测换行 + 装订线）
+   Markdown Editor（透明 textarea + 语法高亮渲染层 + 图片预览）
    ============================ */
 .editor-scroll {
   flex: 1;
   overflow: auto;
   cursor: text;
-  position: relative;
 }
 .editor-body {
   display: flex;
   min-height: 100%;
 }
-/* ---- 隐藏镜像 div：与 textarea 完全相同的排版规则，用于实测每行视觉高度 ---- */
+/* ---- 隐藏镜像 div：实测换行高度 ---- */
 .editor-mirror {
   position: absolute;
   visibility: hidden;
   pointer-events: none;
-  top: 16px;            /* 与 textarea padding-top 对齐 */
+  top: 16px;
   left: 0;
   font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
   font-size: 14px;
@@ -195,10 +194,7 @@ body {
   overflow-wrap: break-word;
   tab-size: 2;
 }
-.editor-mirror > div {
-  margin: 0;
-  padding: 0;
-}
+.editor-mirror > div { margin: 0; padding: 0; }
 /* ---- 装订线 ---- */
 .gutter {
   flex-shrink: 0;
@@ -213,7 +209,7 @@ body {
 .gutter-row {
   display: flex;
   align-items: center;
-  height: 1.6em;        /* 与 textarea / mirror 的 line-height 精确一致 */
+  height: 1.6em;
   padding-right: 4px;
 }
 .gutter-ln {
@@ -223,7 +219,7 @@ body {
   font-size: 13px;
   color: #666666;
 }
-/* 折叠箭头 — 无框纯图标 */
+/* 折叠箭头 */
 .fold-toggle {
   width: 16px;
   height: 16px;
@@ -235,13 +231,52 @@ body {
   cursor: pointer;
   color: #cccccc;
 }
-.editor-scroll--gutter-hover .fold-toggle {
-  opacity: 1;
+.editor-scroll--gutter-hover .fold-toggle { opacity: 1; }
+.fold-toggle--visible { opacity: 1; }
+/* ---- 渲染层（语法高亮） ---- */
+.render-layer {
+  flex: 1;
+  min-width: 0;
+  padding: 16px 8px;
+  font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  tab-size: 2;
+  color: #cccccc;
+  position: relative;
+  z-index: 1;
+  pointer-events: none; /* 点击穿透到 textarea */
 }
-.fold-toggle--visible {
-  opacity: 1;
+.render-line {
+  height: 1.6em;
 }
-/* ---- 编辑区 ---- */
+/* ---- 语法高亮色板 ---- */
+.syntax-bracket { color: #5a5a5a; }          /* ** * ~~ ` # 等标记符号 */
+.syntax-heading { color: #4fc1ff; font-weight: 700; }
+.syntax-bold { font-weight: 700; color: #ffffff; }
+.syntax-italic { font-style: italic; }
+.syntax-strike { text-decoration: line-through; color: #858585; }
+.syntax-code { color: #ce9178; }
+.syntax-link { color: #3794ff; text-decoration: underline; cursor: pointer; pointer-events: auto; }
+.syntax-image { color: #8a8a8a; }
+/* ---- 图片预览行（在渲染层内，不算新行号） ---- */
+.image-preview-row {
+  display: flex;
+  align-items: flex-start;
+  padding: 4px 0 4px 0;
+  pointer-events: auto;
+}
+.image-preview-img {
+  max-width: 80%;
+  max-height: 360px;
+  border-radius: 6px;
+  border: 1px solid #3c3c3c;
+  object-fit: contain;
+  display: block;
+}
+/* ---- 透明 textarea 输入层 ---- */
 .editor-textarea {
   flex: 1;
   min-width: 0;
@@ -250,7 +285,8 @@ body {
   font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
   font-size: 14px;
   line-height: 1.6;
-  color: #cccccc;
+  color: transparent;
+  caret-color: #ffffff;
   background: transparent;
   border: none;
   outline: none;
@@ -259,7 +295,12 @@ body {
   white-space: pre-wrap;
   overflow-wrap: break-word;
   tab-size: 2;
+  position: relative;
+  z-index: 2;
 }
-.editor-textarea::placeholder {
-  color: #666666;
+.editor-textarea::placeholder { color: #666666; }
+/* 选中文字在透明 textarea 中不可见，用下面的伪元素或 js 高亮 */
+.editor-textarea::selection {
+  background: rgba(38, 79, 120, 0.4);
+  color: transparent;
 }

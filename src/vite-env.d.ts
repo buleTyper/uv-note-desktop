@@ -17,6 +17,9 @@ interface ElectronAPI {
   getAppConfig: () => Promise<Record<string, string>>
   setAppConfig: (config: Record<string, string>) => Promise<{ success: boolean; error?: string }>
 
+  // 剪贴板图片保存
+  saveClipboardImage: (workspacePath: string, base64Data: string) => Promise<{ success: boolean; path?: string; error?: string }>
+
   // 窗口控制（无边框自定义标题栏用）
   windowMinimize: () => Promise<void>
   windowMaximize: () => Promise<void>

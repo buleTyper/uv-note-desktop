@@ -421,6 +421,7 @@ export default function App() {
         <MarkdownEditor
           value={activeTab.editContent}
           onChange={handleEditChange}
+          workspacePath={workspace}
         />
       ) : (
         <div className="flex items-center justify-center flex-1 text-app-text-dim text-[14px]">

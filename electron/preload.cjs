@@ -9,7 +9,11 @@ contextBridge.exposeInMainWorld('electronAPI', {
   getAppConfig: () => ipcRenderer.invoke('get-app-config'),
   setAppConfig: (c) => ipcRenderer.invoke('set-app-config', c),
 
-  // 窗口控制（无边框自定义标题栏用）
+  // 剪贴板图片保存
+  saveClipboardImage: (workspacePath, base64Data) =>
+    ipcRenderer.invoke('save-clipboard-image', workspacePath, base64Data),
+
+  // 窗口控制
   windowMinimize: () => ipcRenderer.invoke('window-minimize'),
   windowMaximize: () => ipcRenderer.invoke('window-maximize'),
   windowClose: () => ipcRenderer.invoke('window-close'),
