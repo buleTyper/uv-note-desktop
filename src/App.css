@@ -304,3 +304,48 @@ body {
   background: rgba(38, 79, 120, 0.4);
   color: transparent;
 }
+
+/* ============================
+   Tag Tree - 标签树右键菜单
+   ============================ */
+.tag-context-menu__inner {
+  background: #252526;
+  border: 1px solid #3c3c3c;
+  border-radius: 6px;
+  padding: 4px 0;
+  min-width: 200px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+.tag-context-menu__header {
+  padding: 4px 12px 6px;
+  font-size: 11px;
+  color: #858585;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.tag-context-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 5px 12px;
+  font-size: 13px;
+  color: #cccccc;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.1s;
+}
+.tag-context-menu__item:hover {
+  background: #094771;
+  color: #ffffff;
+}
+.tag-context-menu__item--active {
+  color: #4fc1ff;
+}
+.tag-context-menu__divider {
+  height: 1px;
+  background: #3c3c3c;
+  margin: 3px 8px;
+}

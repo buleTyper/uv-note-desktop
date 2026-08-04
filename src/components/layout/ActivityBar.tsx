@@ -1,6 +1,7 @@
 import type { LucideIcon } from 'lucide-react'
 import {
   Files,
+  Tags,
   Search,
   GitGraph,
   LayoutGrid,
@@ -21,7 +22,8 @@ export interface ActivityNavItem {
 
 /** 活动栏导航项配置 */
 export const ACTIVITY_ITEMS: ActivityNavItem[] = [
-  { id: 'explorer', icon: Files, label: '资源管理器' },
+  { id: 'explorer', icon: Files, label: '文件树' },
+  { id: 'tags', icon: Tags, label: '标签树' },
   { id: 'search', icon: Search, label: '搜索' },
   { id: 'graph', icon: GitGraph, label: '关系图谱' },
   { id: 'layout', icon: LayoutGrid, label: '视图布局' },

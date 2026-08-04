@@ -16,6 +16,10 @@ interface MainLayoutProps {
   sidebarVisible?: boolean
   /** 底部状态栏（横跨整行） */
   statusBar?: ReactNode
+  /** 当前激活的活动栏标签（受控模式） */
+  activeActivityTab?: string
+  /** 活动栏标签变化回调 */
+  onActivityTabChange?: (tabId: string) => void
 }
 
 // ============================
@@ -27,9 +31,14 @@ export default function MainLayout({
   sidebar,
   sidebarVisible: sidebarVisibleProp = true,
   statusBar,
+  activeActivityTab: controlledTab,
+  onActivityTabChange,
 }: MainLayoutProps) {
   const [sidebarVisible, setSidebarVisible] = useState(sidebarVisibleProp)
-  const [activeTab, setActiveTab] = useState('explorer')
+  const [internalActiveTab, setInternalActiveTab] = useState('explorer')
+
+  // 受控模式 vs 非受控模式
+  const activeTab = controlledTab ?? internalActiveTab
 
   // 切换侧边栏
   const toggleSidebar = () => setSidebarVisible(prev => !prev)
@@ -41,7 +50,11 @@ export default function MainLayout({
     if (tabId === activeTab) {
       toggleSidebar()
     } else {
-      setActiveTab(tabId)
+      if (onActivityTabChange) {
+        onActivityTabChange(tabId)
+      } else {
+        setInternalActiveTab(tabId)
+      }
       if (!sidebarVisible) setSidebarVisible(true)
     }
   }

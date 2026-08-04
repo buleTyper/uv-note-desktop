@@ -13,6 +13,40 @@ contextBridge.exposeInMainWorld('electronAPI', {
   saveClipboardImage: (workspacePath, base64Data) =>
     ipcRenderer.invoke('save-clipboard-image', workspacePath, base64Data),
 
+  // 标签系统
+  tagsScanWorkspace: (workspacePath) =>
+    ipcRenderer.invoke('tags-scan-workspace', workspacePath),
+  tagsReadIndex: (workspacePath) =>
+    ipcRenderer.invoke('tags-read-index', workspacePath),
+  tagsPatchFile: (workspacePath, relativePath, content) =>
+    ipcRenderer.invoke('tags-patch-file', workspacePath, relativePath, content),
+  tagsRemoveFile: (workspacePath, relativePath) =>
+    ipcRenderer.invoke('tags-remove-file', workspacePath, relativePath),
+  tagsReadSchema: (workspacePath) =>
+    ipcRenderer.invoke('tags-read-schema', workspacePath),
+  tagsSaveSchema: (workspacePath, schema) =>
+    ipcRenderer.invoke('tags-save-schema', workspacePath, schema),
+  tagsReadTreeTxt: (workspacePath) =>
+    ipcRenderer.invoke('tags-read-tree-txt', workspacePath),
+  tagsSaveTreeTxt: (workspacePath, text) =>
+    ipcRenderer.invoke('tags-save-tree-txt', workspacePath, text),
+  tagsStopWatch: (workspacePath) =>
+    ipcRenderer.invoke('tags-stop-watch', workspacePath),
+
+  // 文件变更监听
+  onFileChanged: (callback) => {
+    const handler = (_event, info) => callback(info)
+    ipcRenderer.on('file-changed', handler)
+    return () => ipcRenderer.removeListener('file-changed', handler)
+  },
+
+  // 标签配置文件变更监听（tree.txt / schema.json 外部修改）
+  onTagsConfigChanged: (callback) => {
+    const handler = (_event, info) => callback(info)
+    ipcRenderer.on('tags-config-changed', handler)
+    return () => ipcRenderer.removeListener('tags-config-changed', handler)
+  },
+
   // 窗口控制
   windowMinimize: () => ipcRenderer.invoke('window-minimize'),
   windowMaximize: () => ipcRenderer.invoke('window-maximize'),
@@ -23,7 +57,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   onWindowMaximizeChange: (callback) => {
     const handler = (_event, isMaximized) => callback(isMaximized)
     ipcRenderer.on('window-maximized', handler)
-    // 返回取消监听的函数
     return () => ipcRenderer.removeListener('window-maximized', handler)
   },
 })
